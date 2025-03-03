@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Surprise</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="content">
+            <div class="terminal">
+                <pre id="output">
+The darkness fades...
+
+A special message for you:<br>
+"<b>HAPPY BIRTHDAY!</b> You are the most special person in my life. I hope this adventure was as thrilling as our journey together. Always remember, you're loved and cherished."
+                
+Click here to reveal your secret surprise...
+                </pre>
+                <button id="clickHereBtn">CLICK HERE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add the event listener for the button click
+        document.getElementById("clickHereBtn").addEventListener("click", function() {
+            window.location.href = "secret.html"; // Redirect to the secret surprise page
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Birthday Wishes</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .birthday-content {
+            margin: 0 auto;
+            padding: 40px;
+            max-width: 900px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 25px;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .birthday-img {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .birthday-wish {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff00ff;
+            margin-top: 20px;
+            text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.6);
+            animation: glowText 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowText {
+            0% {
+                text-shadow: 0 0 15px rgba(255, 0, 255, 1), 0 0 25px rgba(255, 0, 255, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 30px rgba(255, 0, 255, 1), 0 0 50px rgba(255, 0, 255, 0.7);
+            }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .birthday-content {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .birthday-wish {
+                font-size: 20px;
+            }
+
+            .birthday-img {
+                width: 100%;
+                margin-top: 15px;
+            }
+        }
+
+        /* Very Small Screen Adjustments (like small phones) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .birthday-wish {
+                font-size: 18px;
+            }
+
+            .birthday-img {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        /* Popup Message Style */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            text-align: center;
+            width: 80%;
+        }
+
+        .popup button {
+            background-color: #ff00ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .popup button:hover {
+            background-color: #d900d9;
+        }
+
+        .play-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #ff00ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .play-button:hover {
+            background-color: #d900d9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Play Button for user interaction -->
+    <button id="playButton" class="play-button">Play Music & Start Slideshow</button>
+
+    <!-- Background Music -->
+    <audio id="birthdayAudio">
+        <source src="../music/birthday.mp3" type="audio/mp3"> <!-- Background Birthday Music -->
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="birthday-content">
+        <h1>Secret Birthday Wishes for You</h1>
+        <p class="birthday-wish">🎉 Happy Birthday! 🎉 You are the light of my life, and I feel incredibly lucky to have you in it. Every moment with you is a treasure, and I hope this year brings you all the happiness you deserve. 💖</p>
+        <img id="birthdayImg" src="../images/1.jpg" alt="Secret Surprise Image" class="birthday-img">
+    </div>
+
+    <!-- Popup Message for Slideshow Completion -->
+    <div id="popupMessage" class="popup">
+        <p>🎉 The slideshow is complete! 🎉</p>
+        <button onclick="showFinalMessage()">Close</button>
+    </div>
+
+    <!-- Final Custom Popup Message -->
+    <div id="finalMessagePopup" class="popup">
+        <p>Happy birthday my dear Darling. Wishing you a very happy birthday💖</p>
+        <button onclick="closeFinalMessage()">Close</button>
+    </div>
+
+    <script>
+        // List of 22 image sources
+        const images = [
+            "../images/2.jpg", 
+            "../images/3.jpg",
+            "../images/4.jpg",
+            "../images/5.jpg",
+            "../images/6.jpg",
+            "../images/7.jpg",
+            "../images/8.jpg",
+            "../images/9.jpg",
+            "../images/10.jpg",
+            "../images/11.jpg",
+            "../images/12.jpg",
+            "../images/13.jpg",
+            "../images/14.jpg",
+            "../images/15.jpg",
+            "../images/16.jpg",
+            "../images/17.jpg",
+            "../images/18.jpg",
+            "../images/19.jpg",
+            "../images/20.jpg",
+            "../images/21.jpg",
+            "../images/22.jpg"
+        ];
+
+        let currentIndex = 0;
+        const imgElement = document.getElementById("birthdayImg");
+
+        // Preload all images to improve performance
+        const imageElements = images.map(src => {
+            const img = new Image();
+            img.src = src;
+            return img;
+        });
+
+        // Function to change the image
+        function changeImage() {
+            imgElement.style.opacity = 0; // Fade out the image
+
+            setTimeout(() => {
+                imgElement.src = images[currentIndex]; // Change the image source
+                currentIndex = (currentIndex + 1) % images.length; // Move to the next image in the list
+                imgElement.style.opacity = 1; // Fade in the new image
+
+                if (currentIndex === 0) {
+                    showSlideshowCompletePopup(); // Show the first popup when slideshow is complete
+                }
+            }, 500); // Wait for the fade-out effect to finish
+        }
+
+        // Change image every 3 seconds (3000 milliseconds)
+        let imageInterval;
+
+        // Show the first popup message (Slideshow Complete)
+        function showSlideshowCompletePopup() {
+            clearInterval(imageInterval); // Stop the slideshow
+            document.getElementById("popupMessage").style.display = "block"; // Show the popup message
+        }
+
+        // Show final custom message popup
+        function showFinalMessage() {
+            document.getElementById("popupMessage").style.display = "none"; // Hide the first popup
+            document.getElementById("finalMessagePopup").style.display = "block"; // Show the final custom message popup
+        }
+
+        // Close the final message popup
+        function closeFinalMessage() {
+            document.getElementById("finalMessagePopup").style.display = "none"; // Hide the final popup
+        }
+
+        // Play button click event
+        document.getElementById("playButton").addEventListener('click', function() {
+            // Start the audio (plays only once)
+            const audio = document.getElementById("birthdayAudio");
+            audio.play();  // Start the audio
+
+            // Hide the play button after click
+            document.getElementById("playButton").style.display = 'none';
+
+            // Start the slideshow immediately after playing music
+            imageInterval = setInterval(changeImage, 3000);
+        });
+    </script>
+
+</body>
+</html>

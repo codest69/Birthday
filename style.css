@@ -1,0 +1,30 @@
+body {
+    background-color: black;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+.terminal {
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background: black;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+pre {
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+input {
+    width: 90%;
+    padding: 10px;
+    background: black;
+    color: #00ff00;
+    border: none;
+    font-size: 16px;
+}

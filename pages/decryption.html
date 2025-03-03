@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt the Message</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../puzzles/cipher.js" defer></script>
+</head>
+<body>
+    <div class="terminal">
+        <pre id="output">
+[SECURE FILE DETECTED]
+The message is encrypted. Decrypt it to proceed.
+
+Encrypted Message: <span id="encryptedMessage"></span>
+        </pre>
+        <input type="text" id="decryptInput" autofocus placeholder="Enter decrypted text...">
+        <button onclick="checkDecryption()">Submit</button>
+    </div>
+</body>
+</html>
